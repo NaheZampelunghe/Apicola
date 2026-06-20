@@ -1,0 +1,10 @@
+<Solution>
+  <Project Path="Apicola.Abstactions/Apicola.Abstactions.csproj" />
+  <Project Path="Apicola.Application/Apicola.Application.csproj" />
+  <Project Path="Apicola.DataAccess/Apicola.DataAccess.csproj" />
+  <Project Path="Apicola.Entities/Apicola.Entities.csproj" />
+  <Project Path="Apicola.Enums/Apicola.Enums.csproj" />
+  <Project Path="Apicola.Repository/Apicola.Repository.csproj" />
+  <Project Path="Apicola.Services/Apicola.Services.csproj" />
+  <Project Path="Apicola.WebApi/Apicola.WebApi.csproj" />
+</Solution>

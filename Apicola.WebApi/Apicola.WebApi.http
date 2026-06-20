@@ -1,0 +1,6 @@
+@Apicola.WebApi_HostAddress = http://localhost:5167
+
+GET {{Apicola.WebApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
