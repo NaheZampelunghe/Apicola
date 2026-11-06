@@ -9,6 +9,10 @@ namespace Apicola.Entities
 {
     public class Ciudad : IEntidad
     {
+        public Ciudad()
+        {
+            Localidades = new HashSet<Localidad>();
+        }
         public int Id { get; set; }
         [StringLength(30)]
         public string Nombre { get; set; } = null!;
@@ -17,5 +21,6 @@ namespace Apicola.Entities
         public int IdProvincia { get; set; }
 
         public virtual Provincia Provincia { get; set; }
+        public virtual ICollection<Localidad> Localidades { get; set; } 
     }
 }

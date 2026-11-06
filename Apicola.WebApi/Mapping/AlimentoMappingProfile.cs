@@ -9,6 +9,7 @@ namespace Apicola.WebApi.Mapping
         public AlimentoMappingProfile()
         {
             CreateMap<Alimento, AlimentoResponseDto>();
+            CreateMap<Alimento, AlimentoSelectListDto>();
             CreateMap<AlimentoRequestDto, Alimento>();
         }
     }

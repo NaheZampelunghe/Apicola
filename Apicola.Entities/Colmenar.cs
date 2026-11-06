@@ -9,6 +9,10 @@ namespace Apicola.Entities
 {
     public class Colmenar : IEntidad
     {
+        public Colmenar()
+        {
+            Colmenas = new HashSet<Colmena>();
+        }
         public int Id { get; set; }
         [StringLength(30)]
         public string Nombre { get; set; } = null!;
@@ -17,5 +21,6 @@ namespace Apicola.Entities
         public int UbicacionId { get; set; }
 
         public virtual Ubicacion Ubicacion { get; set; }
+        public virtual ICollection<Colmena> Colmenas { get; set; }
     }
 }

@@ -7,6 +7,8 @@ namespace Apicola.Application.DTOs.Colmenar
         public int Id { get; set; }
         [StringLength(30)]
         public string Nombre { get; set; } = null!;
-        public int UbicacionId { get; set; }
+        public string Ubicacion { get; set; } = null!;
+        public int CantidadColmenas { get; set; }
+        public int IdUbicacion { get; set; }
     }
 }

@@ -3,10 +3,10 @@ using Apicola.Application.DTOs.Alimento;
 using Apicola.Entities;
 using Apicola.Entities.MicrosoftIdentity;
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Apicola.WebApi.Controllers
 {
@@ -25,6 +25,20 @@ namespace Apicola.WebApi.Controllers
             _logger = logger;
             _alimento = alimento;
             _mapper = mapper;
+        }
+        [Route("SelectList")]
+        [HttpGet]
+        public ActionResult<IEnumerable<AlimentoSelectListDto>> GetSelectList()
+        {
+            try
+            {
+                var list = _mapper.Map<IList<AlimentoSelectListDto>>(_alimento.GetAll().ToList());
+                return Ok(list);
+            }
+            catch (Exception ex)
+            {
+                return Conflict();
+            }
         }
         // GET: api/<AlimentosController>
         [HttpGet]

@@ -8,7 +8,10 @@ namespace Apicola.WebApi.Mapping
     {
         public ColmenarMappingProfile()
         {
-            CreateMap<Colmenar, ColmenarResponseDto>();
+            CreateMap<Colmenar, ColmenarResponseDto>().
+                ForMember(dest=>dest.Ubicacion,opt=>opt.MapFrom(src=>src.Ubicacion.Nombre)).
+                ForMember(dest=>dest.CantidadColmenas,opt=>opt.MapFrom(src=>src.Colmenas.Count()));
+            CreateMap<Colmenar, ColmenarSelectListDto>().ForMember(dest=>dest.Nombre,opt=>opt.MapFrom(src=>src.Ubicacion.Nombre + " " + src.Nombre));
             CreateMap<ColmenarRequestDto, Colmenar>();
         }
     }

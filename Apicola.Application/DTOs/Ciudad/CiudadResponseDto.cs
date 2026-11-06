@@ -12,5 +12,6 @@ namespace Apicola.Application.DTOs.Ciudad
         public string Nombre { get; set; } = null!;
         [StringLength(30)]
         public string Provincia { get; set; } = null!;
+        public int IdProvincia { get; set; }
     }
 }

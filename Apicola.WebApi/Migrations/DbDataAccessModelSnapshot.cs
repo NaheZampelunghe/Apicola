@@ -43,29 +43,6 @@ namespace Apicola.WebApi.Migrations
                     b.ToTable("Alimentos");
                 });
 
-            modelBuilder.Entity("Apicola.Entities.Categoria", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Descripcion")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
-                    b.Property<string>("Nombre")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Categorias");
-                });
-
             modelBuilder.Entity("Apicola.Entities.Ciudad", b =>
                 {
                     b.Property<int>("Id")
@@ -138,114 +115,6 @@ namespace Apicola.WebApi.Migrations
                     b.ToTable("Colmenar");
                 });
 
-            modelBuilder.Entity("Apicola.Entities.Compra", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("FechaCompra")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("IdProveedor")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("Precio")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IdProveedor");
-
-                    b.ToTable("Compras");
-                });
-
-            modelBuilder.Entity("Apicola.Entities.Curado_Alimentado", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<bool>("Alimentado")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("CantidadMuertas")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("Curado")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("IdFechaVisita")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IdFechaVisita");
-
-                    b.ToTable("Curados_Alimentados");
-                });
-
-            modelBuilder.Entity("Apicola.Entities.Curado_Medicamento", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("IdAlimento")
-                        .HasColumnType("int");
-
-                    b.Property<int>("IdCurado")
-                        .HasColumnType("int");
-
-                    b.Property<int>("IdMedicamento")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IdAlimento");
-
-                    b.HasIndex("IdCurado");
-
-                    b.HasIndex("IdMedicamento");
-
-                    b.ToTable("Curado_Medicamentos");
-                });
-
-            modelBuilder.Entity("Apicola.Entities.DetalleCompra", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("Cantidad")
-                        .HasColumnType("int");
-
-                    b.Property<int>("IdCompra")
-                        .HasColumnType("int");
-
-                    b.Property<int>("IdProducto")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("Precio")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IdCompra");
-
-                    b.HasIndex("IdProducto");
-
-                    b.ToTable("DetallesCompras");
-                });
-
             modelBuilder.Entity("Apicola.Entities.Duenio", b =>
                 {
                     b.Property<int>("Id")
@@ -279,7 +148,7 @@ namespace Apicola.WebApi.Migrations
                     b.ToTable("Duenios");
                 });
 
-            modelBuilder.Entity("Apicola.Entities.Fecha", b =>
+            modelBuilder.Entity("Apicola.Entities.HistorialColmenar", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -287,17 +156,36 @@ namespace Apicola.WebApi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<bool>("Alimentado")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("CantidadMuertas")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Curado")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime>("FechaVisita")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("IdColmenar")
+                    b.Property<int?>("IdAlimento")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("IdColmenar")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("IdMedicamento")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("IdAlimento");
+
                     b.HasIndex("IdColmenar");
 
-                    b.ToTable("Fechas");
+                    b.HasIndex("IdMedicamento");
+
+                    b.ToTable("HistorialColmenar");
                 });
 
             modelBuilder.Entity("Apicola.Entities.Localidad", b =>
@@ -551,74 +439,6 @@ namespace Apicola.WebApi.Migrations
                     b.ToTable("UserToken", (string)null);
                 });
 
-            modelBuilder.Entity("Apicola.Entities.Producto", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("IdCategoria")
-                        .HasColumnType("int");
-
-                    b.Property<int>("IdProveedor")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Nombre")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
-                    b.Property<decimal>("Stock")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IdCategoria");
-
-                    b.HasIndex("IdProveedor");
-
-                    b.ToTable("Productos");
-                });
-
-            modelBuilder.Entity("Apicola.Entities.Proveedor", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CodPostal")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Direccion")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("IdLocalidad")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Nombre")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
-                    b.Property<decimal>("Telefono")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IdLocalidad");
-
-                    b.ToTable("Proveedors");
-                });
-
             modelBuilder.Entity("Apicola.Entities.Provincia", b =>
                 {
                     b.Property<int>("Id")
@@ -663,7 +483,7 @@ namespace Apicola.WebApi.Migrations
             modelBuilder.Entity("Apicola.Entities.Ciudad", b =>
                 {
                     b.HasOne("Apicola.Entities.Provincia", "Provincia")
-                        .WithMany()
+                        .WithMany("Ciudades")
                         .HasForeignKey("IdProvincia")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -674,7 +494,7 @@ namespace Apicola.WebApi.Migrations
             modelBuilder.Entity("Apicola.Entities.Colmena", b =>
                 {
                     b.HasOne("Apicola.Entities.Colmenar", "Colmenar")
-                        .WithMany()
+                        .WithMany("Colmenas")
                         .HasForeignKey("IdColmenar")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -693,80 +513,12 @@ namespace Apicola.WebApi.Migrations
             modelBuilder.Entity("Apicola.Entities.Colmenar", b =>
                 {
                     b.HasOne("Apicola.Entities.Ubicacion", "Ubicacion")
-                        .WithMany()
+                        .WithMany("Colmenares")
                         .HasForeignKey("UbicacionId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Ubicacion");
-                });
-
-            modelBuilder.Entity("Apicola.Entities.Compra", b =>
-                {
-                    b.HasOne("Apicola.Entities.Proveedor", "Proveedor")
-                        .WithMany()
-                        .HasForeignKey("IdProveedor")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Proveedor");
-                });
-
-            modelBuilder.Entity("Apicola.Entities.Curado_Alimentado", b =>
-                {
-                    b.HasOne("Apicola.Entities.Fecha", "Fecha")
-                        .WithMany()
-                        .HasForeignKey("IdFechaVisita")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Fecha");
-                });
-
-            modelBuilder.Entity("Apicola.Entities.Curado_Medicamento", b =>
-                {
-                    b.HasOne("Apicola.Entities.Alimento", "Alimento")
-                        .WithMany()
-                        .HasForeignKey("IdAlimento")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Apicola.Entities.Curado_Alimentado", "Curado")
-                        .WithMany()
-                        .HasForeignKey("IdCurado")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Apicola.Entities.Medicamento", "Medicamento")
-                        .WithMany()
-                        .HasForeignKey("IdMedicamento")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Alimento");
-
-                    b.Navigation("Curado");
-
-                    b.Navigation("Medicamento");
-                });
-
-            modelBuilder.Entity("Apicola.Entities.DetalleCompra", b =>
-                {
-                    b.HasOne("Apicola.Entities.Compra", "Compra")
-                        .WithMany()
-                        .HasForeignKey("IdCompra")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Apicola.Entities.Producto", "Producto")
-                        .WithMany()
-                        .HasForeignKey("IdProducto")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Compra");
-
-                    b.Navigation("Producto");
                 });
 
             modelBuilder.Entity("Apicola.Entities.Duenio", b =>
@@ -780,21 +532,34 @@ namespace Apicola.WebApi.Migrations
                     b.Navigation("Localidad");
                 });
 
-            modelBuilder.Entity("Apicola.Entities.Fecha", b =>
+            modelBuilder.Entity("Apicola.Entities.HistorialColmenar", b =>
                 {
+                    b.HasOne("Apicola.Entities.Alimento", "Alimento")
+                        .WithMany()
+                        .HasForeignKey("IdAlimento")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("Apicola.Entities.Colmenar", "Colmenar")
                         .WithMany()
                         .HasForeignKey("IdColmenar")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Apicola.Entities.Medicamento", "Medicamento")
+                        .WithMany()
+                        .HasForeignKey("IdMedicamento")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Alimento");
 
                     b.Navigation("Colmenar");
+
+                    b.Navigation("Medicamento");
                 });
 
             modelBuilder.Entity("Apicola.Entities.Localidad", b =>
                 {
                     b.HasOne("Apicola.Entities.Ciudad", "Ciudad")
-                        .WithMany()
+                        .WithMany("Localidades")
                         .HasForeignKey("IdCiudad")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -853,45 +618,40 @@ namespace Apicola.WebApi.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Apicola.Entities.Producto", b =>
-                {
-                    b.HasOne("Apicola.Entities.Categoria", "Categoria")
-                        .WithMany()
-                        .HasForeignKey("IdCategoria")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Apicola.Entities.Proveedor", "Proveedor")
-                        .WithMany()
-                        .HasForeignKey("IdProveedor")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Categoria");
-
-                    b.Navigation("Proveedor");
-                });
-
-            modelBuilder.Entity("Apicola.Entities.Proveedor", b =>
+            modelBuilder.Entity("Apicola.Entities.Ubicacion", b =>
                 {
                     b.HasOne("Apicola.Entities.Localidad", "Localidad")
-                        .WithMany()
+                        .WithMany("Ubicaciones")
                         .HasForeignKey("IdLocalidad")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Localidad");
+                });
+
+            modelBuilder.Entity("Apicola.Entities.Ciudad", b =>
+                {
+                    b.Navigation("Localidades");
+                });
+
+            modelBuilder.Entity("Apicola.Entities.Colmenar", b =>
+                {
+                    b.Navigation("Colmenas");
+                });
+
+            modelBuilder.Entity("Apicola.Entities.Localidad", b =>
+                {
+                    b.Navigation("Ubicaciones");
+                });
+
+            modelBuilder.Entity("Apicola.Entities.Provincia", b =>
+                {
+                    b.Navigation("Ciudades");
                 });
 
             modelBuilder.Entity("Apicola.Entities.Ubicacion", b =>
                 {
-                    b.HasOne("Apicola.Entities.Localidad", "Localidad")
-                        .WithMany()
-                        .HasForeignKey("IdLocalidad")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Localidad");
+                    b.Navigation("Colmenares");
                 });
 #pragma warning restore 612, 618
         }
