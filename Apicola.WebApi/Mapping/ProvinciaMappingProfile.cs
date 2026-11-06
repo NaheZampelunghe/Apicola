@@ -10,6 +10,7 @@ namespace Apicola.WebApi.Mapping
         {
             CreateMap<Provincia, ProvinciaResponseDto>();
             CreateMap<ProvinciaRequestDto, Provincia>();
+            CreateMap<Provincia, ProvinciaSelectListDto>();
         }
     }
 }

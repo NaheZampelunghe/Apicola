@@ -4,6 +4,7 @@ namespace Apicola.Application.DTOs.Localidad
 {
     public class LocalidadRequestDto
     {
+        public int Id { get; set; }
         [StringLength(30)]
         public string Nombre { get; set; } = null!;
         public int IdCiudad { get; set; }

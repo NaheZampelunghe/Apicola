@@ -1,11 +1,15 @@
 ﻿using Apicola.Application;
+using Apicola.Application.DTOs.Colmenar;
 using Apicola.Application.DTOs.Provincia;
 using Apicola.Entities;
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Apicola.WebApi.Controllers
 {
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [Route("api/[controller]")]
     [ApiController]
     public class ProvinciasController : ControllerBase
@@ -29,6 +33,21 @@ namespace Apicola.WebApi.Controllers
         public async Task<IActionResult> All()
         {
             return Ok(_mapper.Map<IList<ProvinciaResponseDto>>(_provincia.GetAll()));
+        }
+
+        [Route("SelectList")]
+        [HttpGet]
+        public ActionResult<IEnumerable<ProvinciaSelectListDto>> GetSelectList()
+        {
+            try
+            {
+                var list = _mapper.Map<IList<ProvinciaSelectListDto>>(_provincia.GetAll().ToList());
+                return Ok(list);
+            }
+            catch (Exception ex)
+            {
+                return Conflict();
+            }
         }
 
         [HttpGet]

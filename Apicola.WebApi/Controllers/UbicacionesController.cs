@@ -1,11 +1,15 @@
 ﻿using Apicola.Application;
+using Apicola.Application.DTOs.Duenio;
 using Apicola.Application.DTOs.Ubicacion;
 using Apicola.Entities;
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Apicola.WebApi.Controllers
 {
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [Route("api/[controller]")]
     [ApiController]
     public class UbicacionesController : ControllerBase
@@ -29,6 +33,21 @@ namespace Apicola.WebApi.Controllers
         public async Task<IActionResult> All()
         {
             return Ok(_mapper.Map<IList<UbicacionResponseDto>>(_ubicacion.GetAll()));
+        }
+
+        [Route("SelectList")]
+        [HttpGet]
+        public ActionResult<IEnumerable<UbicacionSelectListDto>> GetSelectList()
+        {
+            try
+            {
+                var list = _mapper.Map<IList<UbicacionSelectListDto>>(_ubicacion.GetAll().ToList());
+                return Ok(list);
+            }
+            catch (Exception ex)
+            {
+                return Conflict();
+            }
         }
 
         [HttpGet]

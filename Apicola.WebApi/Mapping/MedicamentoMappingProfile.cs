@@ -10,6 +10,7 @@ namespace Apicola.WebApi.Mapping
         {
             CreateMap<Medicamento, MedicamentoResponseDto>();
             CreateMap<MedicamentoRequestDto, Medicamento>();
+            CreateMap<Medicamento, MedicamentoSelectListDto>();
         }
     }
 }

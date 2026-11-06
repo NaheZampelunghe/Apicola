@@ -1,11 +1,15 @@
 ﻿using Apicola.Application;
 using Apicola.Application.DTOs.Ciudad;
+using Apicola.Application.DTOs.Provincia;
 using Apicola.Entities;
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Apicola.WebApi.Controllers
 {
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [Route("api/[controller]")]
     [ApiController]
     public class CiudadesController : ControllerBase
@@ -30,6 +34,22 @@ namespace Apicola.WebApi.Controllers
         {
             return Ok(_mapper.Map<IList<CiudadResponseDto>>(_ciudad.GetAll()));
         }
+
+        [Route("SelectList")]
+        [HttpGet]
+        public ActionResult<IEnumerable<CiudadSelectListDto>> GetSelectList()
+        {
+            try
+            {
+                var list = _mapper.Map<IList<CiudadSelectListDto>>(_ciudad.GetAll().ToList());
+                return Ok(list);
+            }
+            catch (Exception ex)
+            {
+                return Conflict();
+            }
+        }
+
 
         [HttpGet]
         [Route("ById")]

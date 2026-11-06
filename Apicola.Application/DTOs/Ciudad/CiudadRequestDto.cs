@@ -10,7 +10,7 @@ namespace Apicola.Application.DTOs.Ciudad
     {
         public int Id { get; set; }
         [StringLength(30)]
-        public string Nombre { get; set; } = null!;
+        public string? Nombre { get; set; } = null!;
 
         public int IdProvincia { get; set; }
 

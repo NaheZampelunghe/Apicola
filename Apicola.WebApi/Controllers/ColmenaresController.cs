@@ -1,11 +1,15 @@
 ﻿using Apicola.Application;
+using Apicola.Application.DTOs.Alimento;
 using Apicola.Application.DTOs.Colmenar;
 using Apicola.Entities;
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Apicola.WebApi.Controllers
 {
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [Route("api/[controller]")]
     [ApiController]
     public class ColmenaresController : ControllerBase
@@ -29,6 +33,21 @@ namespace Apicola.WebApi.Controllers
         public async Task<IActionResult> All()
         {
             return Ok(_mapper.Map<IList<ColmenarResponseDto>>(_colmenar.GetAll()));
+        }
+
+        [Route("SelectList")]
+        [HttpGet]
+        public ActionResult<IEnumerable<ColmenarSelectListDto>> GetSelectList()
+        {
+            try
+            {
+                var list = _mapper.Map<IList<ColmenarSelectListDto>>(_colmenar.GetAll().ToList());
+                return Ok(list);
+            }
+            catch (Exception ex)
+            {
+                return Conflict();
+            }
         }
 
         [HttpGet]
